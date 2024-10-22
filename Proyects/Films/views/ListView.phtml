@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mi lista de peliculas</title>
+    <link rel="stylesheet" href="../public/css/listView.css">
+</head>
+
+<body>
+
+    <a href="index.php?c=movie&newMovie=1">Añadir pelicula</a>
+
+
+    <form action="index.php?c=movie" method="get">
+        <input type="text" name="search" placeholder="Buscar pelicula">
+        <input type="submit" value="Buscar">
+    </form>
+
+    <form action="index.php?c=user" method="post">
+        <input type="submit" name="cerrar" value="Cerrar">
+    </form>
+
+    <form action="index.php?c=movie&eachUser=1" method="post">
+        <input type="submit" name="comments" value="Comentarios">
+    </form>
+
+    <h1>Mi lista de peliculas</h1>
+
+    <?php
+
+    foreach ($movies as $movie) {
+        echo "<div>";
+        echo "<img src='/public/img/" . $movie->getPoster() . "'>";
+        echo "<a href='index.php?c=movie&eachMovie=" . $movie->getTitle() . "'>" . $movie->getTitle() . "</a>";
+        echo "<p>" . $movie->getGenero() . "</p>";
+        echo "<p>" . $movie->getYear() . "</p>";
+        echo "<form method='post' action=''>";
+        echo "<input type='text' name='comentario' placeholder='Escribe un comentario' required>";
+        echo "<input type='hidden' name='id_movie' value='" . $movie->getId() . "'>";
+        echo "<input type='submit' name='comentar' value='Comentar'>";
+        echo "</form>";
+        echo "<form method='post' action=''>";
+        echo "<input type='hidden' name='id_movie' value='" . $movie->getId() . "'>";
+        echo "<input type='submit' name='eliminar' value='Eliminar'>";
+        echo "<input type='submit' name='favoritos' value='Añadir a favoritos'>";
+        echo "</form>";
+        echo "</div>";
+    }
+
+    ?>
+
+</body>
+
+</html>

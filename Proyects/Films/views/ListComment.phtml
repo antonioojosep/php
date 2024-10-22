@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Mi lista de peliculas</title>
+</head>
+
+<body>
+
+	<form action="index.php?c=user" method="post">
+		<input type="submit" name="cerrar" value="Cerrar">
+	</form>
+
+	<form action="index.php?c=user" method="post">
+		<input type="submit" name="comments" value="Comentarios">
+	</form>
+
+	<h1>Mi lista de peliculas</h1>
+
+	<?php
+	
+	foreach ($movies as $movie) {
+		echo "<div>";
+		echo $movie->getTitle();
+		
+		echo "</div>";
+	}
+	?>
+
+</body>
+
+</html>
