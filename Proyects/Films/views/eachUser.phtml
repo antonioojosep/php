@@ -13,6 +13,7 @@
 
         $allComments = CommentRepository::getCommentsByUser($username);
         foreach($allComments as $comment){
+            echo "<h5>". Movie::getNameById($comment->getMovieId()) .": </h5>";
             echo "<p><strong>". $comment->getUser(). " : </strong>". $comment->getComment(). "</p>";
         }
 
