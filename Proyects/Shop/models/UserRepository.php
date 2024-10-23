@@ -2,18 +2,34 @@
 
 class UserRepository {
 
-    private $allUsers = array();
-
-    public function __getAllUsers()
+    public static function getAllUsers()
     {
         $db = Connection::connect();
-        $q = "SELECT * FROM Users";
+        $q = "SELECT username FROM users";
         $result = $db->query($q);
-
-        while ($row = $result->fetch_assoc()) {
-            $this->allUsers = new User($row);
+        $Users = array();
+        while ($row = $result->fetch_assoc()) {;
+            $Users[] = new User($row['username']);
         }
 
-        return $this->allUsers;
+        return $Users;
+    }
+
+    public static function checkUser($username,$password) {
+        $Users = UserRepository::getAllUsers();
+        foreach ($Users as $user) {
+            if ($user->__getUsername() === $username) {
+                $db = Connection::connect();
+                $q = "SELECT password FROM Users WHERE username ='$username'";
+                $result = $db->query($q);
+            if ($result->fetch_assoc()['password'] === $password) {
+                return new User($username);
+            }else {
+                return "Contraseña incorrecta";
+            }
+            }else {
+                return "Usuario no registrado";
+            }
+        }
     }
 }

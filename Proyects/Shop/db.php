@@ -1,8 +1,13 @@
 <?php
 class Connection {
     public static function connect() {
-        $connect = new mysqli("localhost","root","","shop");
-        $connect->query("SET NAMES utf-8");
-        return $connect;
+        
+        try {
+            $connect = new mysqli("localhost","root","","shop");
+            $connect->query("SET NAMES 'utf8'");
+            return $connect;
+        } catch (Exception $e) {
+            echo "Error al conectar con la base de datos";
+        }
     }
 }
