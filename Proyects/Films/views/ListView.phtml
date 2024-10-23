@@ -3,7 +3,7 @@
 
 <head>
     <title>Mi lista de peliculas</title>
-    <link rel="stylesheet" href="../public/css/listView.css">
+    <link rel="stylesheet" href="./public/css/listView.css">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
     foreach ($movies as $movie) {
         echo "<div>";
-        echo "<img src='/public/img/" . $movie->getPoster() . "'>";
+        echo "<img src='./public/img/" . $movie->getPoster() . "' width=100px>";
         echo "<a href='index.php?c=movie&eachMovie=" . $movie->getTitle() . "'>" . $movie->getTitle() . "</a>";
         echo "<p>" . $movie->getGenero() . "</p>";
         echo "<p>" . $movie->getYear() . "</p>";
