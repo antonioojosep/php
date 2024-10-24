@@ -1,6 +1,5 @@
 <?php
 require_once("views/listView.phtml");
-$admin = $_SESSION['user']->getType() === "admin";
 
 // Cerrar sesión
 if (isset($_GET['close'])) {
@@ -11,6 +10,8 @@ if (isset($_GET['close'])) {
 if (isset($_SESSION['user'])) {
     echo "<a href='index.php?close'>Cerrar</a>";
     echo "<h1>" . $_SESSION['user']->getUsername() . "</h1>";
+
+    $admin = $_SESSION['user']->getType() === "admin";
 
     if ($admin) {
         echo "<a href='index.php?c=product'>Añadir producto</a></br>";
