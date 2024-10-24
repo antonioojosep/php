@@ -1,6 +1,7 @@
 <?php
 require_once("views/loginView.phtml");
 
+// Iniciar Sesión
 if (isset($_POST['login'])) {
     if (!isset($_SESSION['user'])) {
         $user = UserRepository::checkUser($_POST['username'], $_POST['password']);
@@ -13,12 +14,13 @@ if (isset($_POST['login'])) {
     }
 }
 
-if (isset($_POST['signin']) && $_SESSION['user']->getType() === "admin") {
+// Registrarse
+if (isset($_POST['signin'])) {
     $user = UserRepository::checkUser($_POST['username'], $_POST['password']);
     if (is_object($user) || $user === "Contraseña incorrecta") {
         echo "Usuario ya registrado";
     } else {
-        if (UserRepository::addUser($_POST['username'], $_POST['password'], $_POST['type'])) {
+        if (UserRepository::addUser($_POST['username'], $_POST['password'], "user")) {
             $user = new User($_POST['username'], $_POST['type']);
             header("Location: index.php");
         }

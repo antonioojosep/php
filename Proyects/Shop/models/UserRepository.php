@@ -20,7 +20,7 @@ class UserRepository
     {
         $Users = UserRepository::getAllUsers();
         foreach ($Users as $user) {
-            if ($user->__getUsername() === $username) {
+            if ($user->getUsername() === $username) {
                 $db = Connection::connect();
                 $q = "SELECT * FROM users WHERE username ='$username'";
                 $result = $db->query($q);
@@ -45,6 +45,27 @@ class UserRepository
         } catch (Exception $e) {
             echo $e;
             return false;
+        }
+    }
+
+    public static function changeType(User $user)
+    {
+        $username = $user->getUsername();
+        $db = Connection::connect();
+        if ($user->getType()==="admin") {
+            $q = "UPDATE users SET type='user' WHERE username = '$username'";
+        }else {
+            $q = "UPDATE users SET type='admin' WHERE username = '$username'";
+        }
+        $db->query($q);
+    }
+
+    public static function getUserByUsername($username) {
+        $users = UserRepository::getAllUsers();
+        foreach ($users as $user) {
+            if ($user->getUsername()===$username) {
+                return $user;
+            }
         }
     }
 }

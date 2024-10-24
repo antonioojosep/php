@@ -11,7 +11,7 @@ class User
         $this->type = $type;
     }
 
-    public function __getUsername()
+    public function getUsername()
     {
         return $this->username;
     }

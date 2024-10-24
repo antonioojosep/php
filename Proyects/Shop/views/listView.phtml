@@ -7,18 +7,6 @@
     <title>List</title>
 </head>
 
-<body>
-    <?php
-    if (isset($_SESSION['user'])) {
-        echo "<a href='index.php?close'>Cerrar</a>";
-        echo "<h1>" . $_SESSION['user']->__getUsername() . "</h1>";
-
-        if ($_SESSION['user']->getType() === "admin") {
-            echo "<a href='index.php?c=product'>Añadir producto</a>";
-            echo "<a href='index.php?c=user'>Añadir usuario</a>";
-        }
-    }  ?>
-
-</body>
+<body></body>
 
 </html>
