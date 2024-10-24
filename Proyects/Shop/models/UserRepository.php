@@ -6,11 +6,11 @@ class UserRepository
     public static function getAllUsers()
     {
         $db = Connection::connect();
-        $q = "SELECT username FROM users";
+        $q = "SELECT username, type FROM users";
         $result = $db->query($q);
         $Users = array();
         while ($row = $result->fetch_assoc()) {;
-            $Users[] = new User($row['username']);
+            $Users[] = new User($row['username'], $row['type']);
         }
 
         return $Users;
@@ -22,10 +22,11 @@ class UserRepository
         foreach ($Users as $user) {
             if ($user->__getUsername() === $username) {
                 $db = Connection::connect();
-                $q = "SELECT password FROM users WHERE username ='$username'";
+                $q = "SELECT * FROM users WHERE username ='$username'";
                 $result = $db->query($q);
-                if ($result->fetch_assoc()['password'] === $password) {
-                    return new User($username);
+                $data = $result->fetch_assoc();
+                if ($data['password'] === $password) {
+                    return new User($data['username'], $data['type']);
                 } else {
                     return "Contraseña incorrecta";
                 }
@@ -34,13 +35,12 @@ class UserRepository
         return "Usuario no registrado";
     }
 
-    public static function addUser($username, $password)
+    public static function addUser($username, $password, $type)
     {
         try {
             $db = Connection::connect();
-            $q = "INSERT INTO users(username,password) VALUES ('$username', '$password')";
-            $result = $db->query($q);
-            var_dump($result);
+            $q = "INSERT INTO users(username,password,type) VALUES ('$username', '$password','$type')";
+            $db->query($q);
             return true;
         } catch (Exception $e) {
             echo $e;

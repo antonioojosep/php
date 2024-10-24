@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List</title>
 </head>
+
 <body>
-    <h1><?php echo $_SESSION['user']->__getUsername() ?></h1>
-    <a href="index.php?close">Cerrar</a>
+    <?php
+    if (isset($_SESSION['user'])) {
+        echo "<a href='index.php?close'>Cerrar</a>";
+        echo "<h1>" . $_SESSION['user']->__getUsername() . "</h1>";
+
+        if ($_SESSION['user']->getType() === "admin") {
+            echo "<a href='index.php?c=product'>Añadir producto</a>";
+            echo "<a href='index.php?c=user'>Añadir usuario</a>";
+        }
+    }  ?>
+
 </body>
+
 </html>
