@@ -11,6 +11,6 @@ if (isset($_GET['c'])) {
 } else if (!isset($_SESSION['user'])) {
     require_once("controllers/userController.php");
     require_once("controllers/listController.php");
-}else {
-    require_once("controllers/listController.php");
 }
+
+require_once("controllers/listController.php");

@@ -7,6 +7,57 @@
     <title>List</title>
 </head>
 
-<body></body>
+<body>
+    <?php
+    if (isset($_SESSION['user'])) {
+        echo "<a href='index.php?c=user&&close'>Cerrar</a>";
+        echo "<h1>" . $_SESSION['user']->getUsername() . "</h1>";
+
+        $admin = $_SESSION['user']->getType() === "admin";
+
+        if ($admin) {
+            echo "<a href='index.php?c=product'>Añadir producto</a></br>";
+            echo "<a href='index.php?c=user'>Añadir usuario</a></br>";
+            echo "<a href='index.php?c=listUser'>Gestionar usuario</a></br>";
+        }
+    }
+    
+    foreach ($products as $product) {
+        // Declaración de variables
+        $name = $product->getName();
+        $img = $product->getImage();
+        $description = $product->getDescription();
+        $stock = $product->getStock();
+        $price = $product->getPrice();
+
+        // Mostrar
+        echo "<div>";
+        echo "<img src='./public/img/$img' alt='Imagen de producto' width='100px'>";
+        echo "<h3>$name</h3>";
+        echo "<p><strong>$stock und</strong>  $price €</p>";
+        echo "<p>$description</p>";
+        if (isset($_SESSION['user']) && !$admin) {
+            echo
+            "<form action='index.php' method='post'>
+            <input id='amount' type='range' min='1' max='$stock' value='1' step='1' />
+            <p>Value: <output id='value'></output></p>
+            <input type='submit' value='Comprar'/>
+        </form>
+        <script>
+                    const value = document.querySelector('#value');
+                    const input = document.querySelector('#amount');
+                    value.textContent = input.value;
+                    input.addEventListener('input', (event) => {
+                    value.textContent = event.target.value;
+                    });
+            </script>";
+        }
+        echo "</div>";
+    }
+
+
+    ?>
+
+</body>
 
 </html>

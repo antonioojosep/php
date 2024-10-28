@@ -26,3 +26,9 @@ if (isset($_POST['signin'])) {
         }
     }
 }
+
+// Cerrar sesión
+if (isset($_GET['close'])) {
+    session_destroy();
+    header("Location: index.php");
+}
