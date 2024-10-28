@@ -1,13 +1,15 @@
 <?php
 class ProductLine {
-    private $id;
+    private $id_product;
+    private $id_cashorder;
     private $name;
     private $amount;
     private $price;
 
-    public function __construct($id,$name,$amount,$price)
+    public function __construct($id_product,$id_cashorder,$name,$amount,$price)
     {
-        $this->id = $id;
+        $this->id_product = $id_product;
+        $this->id_cashorder = $id_cashorder;
         $this->name = $name;
         $this->amount = $amount;
         $this->price = $price;
@@ -22,7 +24,15 @@ class ProductLine {
         return $this->amount;
     }
 
-    public function getId() {
-        return $this->id;
+    public function getIdProduct() {
+        return $this->id_product;
+    }
+
+    public function getIdCashOrder() {
+        return $this->id_cashorder;
+    }
+
+    public function getPrice() {
+        return $this->price;
     }
 }

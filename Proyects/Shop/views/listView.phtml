@@ -17,11 +17,10 @@
 
         if ($admin) {
             echo "<a href='index.php?c=product'>Añadir producto</a></br>";
-            echo "<a href='index.php?c=user'>Añadir usuario</a></br>";
             echo "<a href='index.php?c=listUser'>Gestionar usuario</a></br>";
         }
     }
-    
+
     foreach ($products as $product) {
         // Declaración de variables
         $name = $product->getName();
@@ -38,10 +37,11 @@
         echo "<p>$description</p>";
         if (isset($_SESSION['user']) && !$admin) {
             echo
-            "<form action='index.php' method='post'>
+            "<form action='index.php?c=cashOrder' method='post'>
+            <input type='hyden'
             <input id='amount' type='range' min='1' max='$stock' value='1' step='1' />
             <p>Value: <output id='value'></output></p>
-            <input type='submit' value='Comprar'/>
+            <input type='submit' name='buy' value='Comprar'/>
         </form>
         <script>
                     const value = document.querySelector('#value');
