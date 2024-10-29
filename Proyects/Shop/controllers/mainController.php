@@ -3,6 +3,11 @@ require_once("models/User.php");
 require_once("models/UserRepository.php");
 require_once("models/Product.php");
 require_once("models/ProductRepository.php");
+require_once("models/CashOrder.php");
+require_once("models/CashOrderRepository.php");
+require_once("models/ProductLine.php");
+require_once("models/ProductLineRepository.php");
+
 
 session_start();
 

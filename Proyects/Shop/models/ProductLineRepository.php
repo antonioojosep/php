@@ -23,5 +23,6 @@ class ProductLineRepository {
         while ($row = $result->fetch_assoc()) {
             $productlines[] = new ProductLine($row['id_product'],$row['id_cashorder'],$row['name'],$row['price'],$row['amount']);
         }
+        return $productlines;
     }
 }

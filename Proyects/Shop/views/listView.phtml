@@ -11,6 +11,7 @@
     <?php
     if (isset($_SESSION['user'])) {
         echo "<a href='index.php?c=user&&close'>Cerrar</a>";
+        echo "<a href='index.php?c=cashOrder'>Carrito</a>";
         echo "<h1>" . $_SESSION['user']->getUsername() . "</h1>";
 
         $admin = $_SESSION['user']->getType() === "admin";
@@ -23,6 +24,7 @@
 
     foreach ($products as $product) {
         // Declaración de variables
+        $id = $product->getId();
         $name = $product->getName();
         $img = $product->getImage();
         $description = $product->getDescription();
@@ -38,8 +40,10 @@
         if (isset($_SESSION['user']) && !$admin) {
             echo
             "<form action='index.php?c=cashOrder' method='post'>
-            <input type='hyden'
-            <input id='amount' type='range' min='1' max='$stock' value='1' step='1' />
+            <input type='hidden' name='id_product' value='$id'/>
+            <input type='hidden' name='name' value='$name'/>
+            <input type='hidden' name='price' value='$price'/>
+            <input id='amount' name='amount' type='range' min='1' max='$stock' value='1' step='1' />
             <p>Value: <output id='value'></output></p>
             <input type='submit' name='buy' value='Comprar'/>
         </form>
