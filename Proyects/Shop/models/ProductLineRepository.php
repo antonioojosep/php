@@ -33,4 +33,19 @@ class ProductLineRepository {
             return $productlines;
         
     }
+
+    public static function getAmountByProduct($id_product,$username) {
+        $products = ProductLineRepository::gelAllsProductLines($username);
+        $productsId = array();
+        $amount = 0;
+        foreach ($products as $product) {
+            if ($product->getIdProduct() == $id_product) {
+                $productsId[] = $product;
+            }
+        }
+        foreach ($productsId as $product) {
+            $amount += $product->getAmount();
+        }
+        return $amount;
+    }
 }

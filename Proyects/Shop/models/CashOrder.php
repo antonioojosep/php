@@ -2,7 +2,7 @@
 class CashOrder {
     private $id;
     private $username;
-    private $address;
+    private $date;
     private $completed;
 
 
@@ -13,9 +13,8 @@ class CashOrder {
         
     }
 
-    public function setCompleted($address) {
+    public function setCompleted() {
         $this->completed = true;
-        $this->address = $address;
     }
 
     public function getId() {
@@ -26,8 +25,8 @@ class CashOrder {
         return $this->username;
     }
 
-    public function getAddress() {
-        return $this->address;
+    public function getDate() {
+        return $this->date;
     }
 
     public function getCompleted() {

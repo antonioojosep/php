@@ -62,6 +62,43 @@
         echo "</div>";
     }
 
+    if (isset($_SESSION['user']) && $admin) {
+        echo "<p>------PRODUCTOS SIN STOCK---------</p>";
+        foreach ($products as $product) {
+            // Declaración de variables
+            $id = $product->getId();
+            $name = $product->getName();
+            $img = $product->getImage();
+            $description = $product->getDescription();
+            $stock = $product->getStock();
+            $price = $product->getPrice();
+            if ($stock==0) {
+                echo "<div>";
+                echo "<img src='./public/img/$img' alt='Imagen de producto' width='100px'>";
+                echo "<h3>$name</h3>";
+                echo "<p><strong>$stock und</strong>  $price €</p>";
+                echo "<p>$description</p>";
+                echo
+                "<form action='index.php?c=product&&addStock' method='post'>
+                    <input type='hidden' name='id_product' value='$id'/>
+                    <input type='hidden' name='name' value='$name'/>
+                    <input type='hidden' name='price' value='$price'/>
+                    <input id='amount$id' name='amount' type='range' min='1' max='100' value='1' step='1' />
+                    <p>Value: <output id='value$id'></output></p>
+                    <input type='submit' name='buy' value='Añadir'/>
+                </form>
+                <script>
+                    const value$id = document.getElementById('value$id');
+                    const input$id = document.getElementById('amount$id');
+                    value$id.textContent = input$id.value;
+                    input$id.addEventListener('input', (event) => {
+                    value$id.textContent = event.target.value;
+                    });
+                </script>";
+            }
+        }
+    }
+
 
     ?>
 

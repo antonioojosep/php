@@ -37,17 +37,11 @@ class ProductRepository
         return false;
     }
 
-    public static function restStock($id,$amount)
-    {
-        $product = ProductRepository::getProductById($id);
-        if ($product->getStock() >= $amount) {
-            $stock = $product->getStock() - $amount; 
-            $db = Connection::connect();
-            $q = "UPDATE products SET stock = '$stock' WHERE id = '$id' ";
-            $result = $db->query($q);
-            return $result;
-        }else {
-            return false;
-        }
+    public static function setStock($id,$amount)
+    { 
+        $db = Connection::connect();
+        $q = "UPDATE products SET stock = '$amount' WHERE id = '$id' ";
+        $result = $db->query($q);
+        return $result;
     }
 }

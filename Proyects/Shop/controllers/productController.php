@@ -1,4 +1,9 @@
 <?php
+if (isset($_GET['addStock'])) {
+    ProductRepository::setStock($_POST['id_product'],$_POST['amount']);
+    header("Location: index.php");
+}
+
 require_once("views/addProductView.phtml");
 require_once("helpers/fileHelper.php");
 
@@ -16,5 +21,4 @@ if (isset($_POST['addProduct'])) {
     // Añadir a la base de datos
     $añadir = ProductRepository::addProduct($name,$description,$image,$stock,$price);
     header("Location: index.php");
-    return $añadir;
 }
