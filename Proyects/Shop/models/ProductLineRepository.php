@@ -7,6 +7,7 @@ class ProductLineRepository {
                 VALUES ('$id_product','$id_cashorder','$name','$price','$amount')";
 
         try {
+            ProductRepository::restStock($id_product,$amount);
             $db->query($q);
             return true;
         } catch (Exception $e) {

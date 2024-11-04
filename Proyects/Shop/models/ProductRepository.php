@@ -26,4 +26,28 @@ class ProductRepository
             return $e;
         }
     }
+
+    public static function getProductById($id) {
+        $products = ProductRepository::getAllProducts();
+        foreach ($products as $product) {
+            if ($product->getId() === $id) {
+                return $product;
+            }
+        }
+        return false;
+    }
+
+    public static function restStock($id,$amount)
+    {
+        $product = ProductRepository::getProductById($id);
+        if ($product->getStock() >= $amount) {
+            $stock = $product->getStock() - $amount; 
+            $db = Connection::connect();
+            $q = "UPDATE products SET stock = '$stock' WHERE id = '$id' ";
+            $result = $db->query($q);
+            return $result;
+        }else {
+            return false;
+        }
+    }
 }

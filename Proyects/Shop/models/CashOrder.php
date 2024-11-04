@@ -10,6 +10,7 @@ class CashOrder {
         $this->id = $id;
         $this->username = $username;
         $this->completed = false;
+        
     }
 
     public function setCompleted($address) {

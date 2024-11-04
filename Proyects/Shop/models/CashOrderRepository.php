@@ -20,4 +20,15 @@ class CashOrderRepository {
         $q = "INSERT INTO cashorder(username) VALUES ('$username')";
         $db->query($q);
     }
+
+    public static function closeCashOrder($id_cashorder) {
+        $db = Connection::connect();
+        $q = "UPDATE cashorder set completed = 1 WHERE id = '$id_cashorder'";
+        try {
+            $db->query($q);
+        } catch (Exception $e) {
+            echo $e;
+            return $e;
+        }
+    }
 }
