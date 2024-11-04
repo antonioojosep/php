@@ -7,7 +7,6 @@ class ProductLineRepository {
                 VALUES ('$id_product','$id_cashorder','$name','$price','$amount')";
 
         try {
-            ProductRepository::restStock($id_product,$amount);
             $db->query($q);
             return true;
         } catch (Exception $e) {
@@ -16,14 +15,22 @@ class ProductLineRepository {
         }
     }
 
-    public static function gelAllsProductLines($id_cashorder) {
-        $db = Connection::connect();
-        $q = "SELECT * FROM productline WHERE id_cashorder = '$id_cashorder'";
-        $result = $db->query($q);
-        $productlines = array();
-        while ($row = $result->fetch_assoc()) {
-            $productlines[] = new ProductLine($row['id_product'],$row['id_cashorder'],$row['name'],$row['price'],$row['amount']);
+    public static function gelAllsProductLines($username) {
+        $cashorder = CashOrderRepository::getNotCompletedCashOrder($username);
+        if (!$cashorder) {
+            CashOrderRepository::createCashOrder($username);
+            $cashorder = CashOrderRepository::getNotCompletedCashOrder($username);
+            ProductLineRepository::gelAllsProductLines($username);
         }
-        return $productlines;
+            $id_cashorder = $cashorder->getId();
+            $db = Connection::connect();
+            $q = "SELECT * FROM productline WHERE id_cashorder = '$id_cashorder'";
+            $result = $db->query($q);
+            $productlines = array();
+            while ($row = $result->fetch_assoc()) {
+                $productlines[] = new ProductLine($row['id_product'],$row['id_cashorder'],$row['name'],$row['amount'],$row['price']);
+            }
+            return $productlines;
+        
     }
 }
