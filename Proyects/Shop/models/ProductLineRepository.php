@@ -48,4 +48,23 @@ class ProductLineRepository {
         }
         return $amount;
     }
+
+    public static function gelAllsCompletedProductLines($username) {
+        $cashorders = CashOrderRepository::getCompletedCashOrder($username);
+        if (!$cashorders) {
+            return false;
+        }
+        $productlines = array();
+        $db = Connection::connect();
+        foreach ($cashorders as $cashorder) {
+            $id_cashorder = $cashorder->getId();
+            $q = "SELECT * FROM productline WHERE id_cashorder = '$id_cashorder'";
+            $result = $db->query($q);
+            while ($row = $result->fetch_assoc()) {
+                $productlines[] = new ProductLine($row['id_product'],$row['id_cashorder'],$row['name'],$row['amount'],$row['price']);
+            }
+        }
+            return $productlines;
+    }
+
 }

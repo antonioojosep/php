@@ -31,4 +31,20 @@ class CashOrderRepository {
             return $e;
         }
     }
+
+    public static function getCompletedCashOrder($username) {
+        $db = Connection::connect();
+        $q = "SELECT * FROM cashorder WHERE username = '$username' AND completed = true";
+        try {
+            $result = $db->query($q);
+            $cashorder = array();
+            while ($row = $result->fetch_assoc()) {
+                $cashorder[] = new CashOrder($row['id'],$row['username']);
+            }
+            return $cashorder;
+        } catch (Exception $e) {
+            echo $e;
+            return false;
+        }
+    }
 }
