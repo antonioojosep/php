@@ -44,4 +44,37 @@ class ProductRepository
         $result = $db->query($q);
         return $result;
     }
+
+    public static function getMostSell() {
+        $db = Connection::connect();
+        $q = "
+            SELECT 
+                p.id,
+                p.name,
+                p.description,
+                p.image,
+                p.stock,
+                p.price,
+            SUM(pl.amount) AS total_sold
+            FROM 
+             productline pl
+            JOIN 
+                products p ON pl.id_product = p.id
+            GROUP BY 
+                p.id, p.name
+            ORDER BY 
+                total_sold DESC
+            LIMIT 1;
+        ";
+        $result = $db->query($q);
+
+        $products = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $products[] = new Product($row['id'], $row['name'], $row['description'], $row['image'], $row['stock'], $row['price']);
+            $products[] = $row['total_sold'];
+        }
+
+        return $products;
+    }
 }

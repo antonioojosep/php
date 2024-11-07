@@ -16,10 +16,32 @@
         if ($admin) {
             echo "<a href='index.php?c=product'>Añadir producto</a></br>";
             echo "<a href='index.php?c=listUser'>Gestionar usuario</a></br>";
+            echo "<a href='index.php?c=listCashOrders'>Gestionar pedidos</a></br>";
         } else {
             echo "<a href='index.php?c=cashOrder'>Carrito</a>";
         }
     }
+
+            $id = $bestProduct[0]->getId();
+            $name = $bestProduct[0]->getName();
+            $img = $bestProduct[0]->getImage();
+            $description = $bestProduct[0]->getDescription();
+            $stock = $bestProduct[0]->getStock();
+            $price = $bestProduct[0]->getPrice();
+            $username = $bestUser[0]->getUsername();
+
+            echo "<div>";
+            echo "<p>-----------BEST PRODUCT-------------------</p>";
+            echo "<img src='./public/img/$img' alt='Imagen de producto' width='100px'>";
+            echo "<h3>$name</h3>";
+            echo "<p><strong>$stock und</strong>  $price €</p>";
+            echo "<p>$description</p>";
+            echo "<p><strong>Total Sold: </strong>$bestProduct[1]</p>";
+            echo "<p>-----------BEST USER-------------------</p>";
+            echo "<p><strong>User: </strong>$username</p>";
+            echo "<p><strong>Total Spend: </strong>$bestUser[1]</p>";
+            echo "<p>-----------------------------------------</p>";
+            echo "</div>";
 
     foreach ($products as $product) {
         // Declaración de variables

@@ -68,4 +68,34 @@ class UserRepository
             }
         }
     }
+
+    public static function getBestUser() {
+        $db = Connection::connect();
+        $q = "
+        SELECT 
+            users.username,
+            users.type,
+            SUM(productline.amount * productline.price) AS total_spent
+        FROM 
+            users
+        JOIN
+            cashorder ON users.username = cashorder.username
+        JOIN 
+            productline ON cashorder.id = productline.id_cashorder
+        WHERE 
+            cashorder.status != 'open'
+        GROUP BY 
+            users.username
+        ORDER BY 
+            total_spent DESC
+        LIMIT 1;";
+        $result = $db->query($q);
+        $bestUser = array();
+        while ($row = $result->fetch_assoc()) {;
+            $bestUser[] = new User($row['username'],$row['type']);
+            $bestUser[] = $row['total_spent'];
+        }
+
+        return $bestUser;
+    }
 }

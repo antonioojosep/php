@@ -24,7 +24,16 @@
             </div>";
     }
     echo "<h2><strong>Precio Total: </strong>$$cahsOrderPrice</h2>";
-    echo "<a href='index.php?c=cashOrder&final=$id_cashorder'>Finalizar Compra</a>";
+    echo "
+        <form action='index.php?c=cashOrder&final=$id_cashorder' method='post'>
+        <input type='text' name='address' id='address' placeholder='Dirección' required >
+        <select name='method' id='method'>
+            <option value='card'>Tarjeta</option>
+            <option value='transfer'>Transferencia</option>
+        </select>
+        <input type='submit' name='final' value='Comprar'>
+        </form>
+    ";
     ?>
 </body>
 

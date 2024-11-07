@@ -3,18 +3,16 @@ class CashOrder {
     private $id;
     private $username;
     private $date;
-    private $completed;
+    private $status;
+    private $address;
 
 
-    public function __construct($id,$username) {
+    public function __construct($id,$username,$date,$status,$address) {
         $this->id = $id;
         $this->username = $username;
-        $this->completed = false;
-        
-    }
-
-    public function setCompleted() {
-        $this->completed = true;
+        $this->date = $date;
+        $this->status = $status;
+        $this->address = $address;
     }
 
     public function getId() {
@@ -29,7 +27,11 @@ class CashOrder {
         return $this->date;
     }
 
-    public function getCompleted() {
-        return $this->completed;
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function getAddress() {
+        return $this->address;
     }
 }
