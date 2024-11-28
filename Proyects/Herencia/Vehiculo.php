@@ -17,7 +17,7 @@ class Vehiculo {
         return $this->peso;
     }
 
-    public function setColor($color) {
+    public function repintar($color) {
         $this->color = $color;
     }
 
@@ -55,7 +55,7 @@ class Cuatro_ruedas extends Vehiculo {
     }
 
     public function repintar ($color) {
-        parent::setColor($color);
+        parent::repintar($color);
     }
 }
 
@@ -63,9 +63,9 @@ class Coche extends Cuatro_ruedas {
 
     private $numero_cadenas_nieve;
 
-    public function __construct($color,$peso,$numero_puertas,$numero_cadenas_nieve) {
+    public function __construct($color,$peso,$numero_puertas) {
         parent::__construct($color,$peso,$numero_puertas);
-        $this->numero_cadenas_nieve = $numero_cadenas_nieve;
+        $this->numero_cadenas_nieve = 0;
     }
 
     public function añadir_cadenas_nieve($num) {
@@ -74,6 +74,10 @@ class Coche extends Cuatro_ruedas {
 
     public function quitar_cadenas_nieve($num) {
         $this->numero_cadenas_nieve -= $num;
+    }
+
+    public function getCad() {
+        return $this->numero_cadenas_nieve;
     }
 }
 
@@ -84,5 +88,9 @@ class Camion extends Cuatro_ruedas {
     public function __construct($color,$peso,$numero_puertas,$longitud) {
         parent::__construct($color,$peso,$numero_puertas);
         $this->longitud = $longitud;
+    }
+
+    public function añadir_remolque($longitud_remolque) {
+        $this->longitud += $longitud_remolque;
     }
 }
