@@ -9,7 +9,7 @@ class UserRepository {
             $Users = array();
 
             while ($row = $result->fetch_assoc()) {
-                $Users[] = new User($row['nickname'],$row['avatar'],$row['email'],$row['public']);
+                $Users[] = new User($row['nickname'],$row['avatar'],$row['email'],$row['type']);
             }
 
             return $Users;
@@ -42,5 +42,25 @@ class UserRepository {
             echo $e;
             return false;
         }
+    }
+
+    public static function getUserByNickName($nickname) {
+        $db = Connection::connect();
+        $q = "SELECT * FROM users WHERE nickname='$nickname'";
+        $result = $db->query($q);
+        $data = $result->fetch_assoc();
+
+        return new User($data['nickname'],$data['avatar'],$data['email'],$data['type']);
+    }
+
+    public static function typeHandler($nickname) {
+        $user = UserRepository::getUserByNickName($nickname);
+        $db = Connection::connect();
+        if ($user->type == 'admin') {
+            $q = "UPDATE users SET type = 'user' where nickname='$nickname'";
+        }else {
+            $q = "UPDATE users SET type = 'admin' where nickname='$nickname'";
+        }
+        $db->query($q);
     }
 }

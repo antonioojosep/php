@@ -46,4 +46,8 @@ class ForumRepository {
 
         return $Matters;
     }
+
+    public static function publicHandler($id) {
+        
+    }
 }

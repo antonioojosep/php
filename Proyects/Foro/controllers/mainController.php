@@ -12,6 +12,9 @@ require_once("models/ResponseRepository.php");
 session_start();
 
 $Forums = ForumRepository::getAllForums();
+if (isset($_SESSION['user'])) {
+    $user = UserRepository::getUserByNickName($_SESSION['user']);
+}
 
 
 if (isset($_GET['c'])) {

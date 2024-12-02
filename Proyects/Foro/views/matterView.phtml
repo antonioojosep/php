@@ -12,8 +12,9 @@
 </header>
 <?php
             foreach ($Responses as $response) {
-                echo "<li><strong>". $response->user . ": </strong>" . $response->text . "</li>";
+                echo "<li><img width='50px' src='./public/img/". UserRepository::getUserByNickName($response->user)->avatar ."'/>  <strong>". $response->user . ": </strong>" . $response->text . "</li>";
             }
         ?>
+        
 </body>
 </html>

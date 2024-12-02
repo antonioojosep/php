@@ -14,6 +14,10 @@
             }else {
                 echo '<a href="index.php?c=user&close">Cerrar Sesión</a>';
             }
+
+            if (isset($_SESSION['user']) && $user->type == 'admin') {
+                echo '<a href="index.php?c=user&list">Listar Usuarios</a>';
+            }
         ?>
         
     </header>
@@ -22,8 +26,23 @@
         <ul>
         <?php
             foreach ($Forums as $forum) {
-                echo "<li><a href='index.php?c=forum&id=" . $forum->id . "'>" . $forum->name . "</a></li>";
+                if (isset($_SESSION['user']) || (!isset($_SESSION['user']) && $forum->public) ) {
+                    echo "<li><a href='index.php?c=forum&id=" . $forum->id . "'>" . $forum->name . "</a></li>";
+                    if (isset($_SESSION['user']) && $user->type == 'admin') {
+                        echo "<a href='index.php?c=forum&public=$forum->id'></a>";
+                    }
+                    $Matters = ForumRepository::getMatterByForum($forum->id);
+                    for ($i=0; $i < 2; $i++) { 
+                        if ($i<count($Matters)) {
+                            echo "<ul type='1'>
+                            <li> " . $Matters[$i]->name . "</li>  
+                            </ul>";
+                        }
+                    }
+                    
+                }
             }
+                
         ?>
         
         </ul>

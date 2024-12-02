@@ -13,6 +13,14 @@
 <?php
             foreach ($Matters as $matter) {
                 echo "<li><a href='index.php?c=matter&id=" . $matter->id . "'>" . $matter->name . "</a></li>";
+                $Responses = MatterRepository::getAllResponseByMatter($matter->id);
+                    for ($i=0; $i < 2; $i++) { 
+                        if ($i<count($Responses)) {
+                            echo "<ul type='1'>
+                            <li> " . $Responses[$i]->text . "</li>  
+                            </ul>";
+                        }
+                    }
             }
         ?>
 </body>
