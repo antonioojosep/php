@@ -27,4 +27,20 @@ class UserRepository {
             return 'Error' . $e;
         }
     }
+
+    public static function checkUser($nickname,$password) {
+        $db = Connection::connect();
+        $q = "SELECT password FROM users WHERE nickname = '$nickname'";
+        try {
+            $result = $db->query($q);
+            if ($result->fetch_column() === $password) {
+                return true;
+            }else {
+                return false;
+            }
+        } catch (Exception $e) {
+            echo $e;
+            return false;
+        }
+    }
 }

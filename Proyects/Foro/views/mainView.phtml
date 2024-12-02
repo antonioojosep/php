@@ -22,9 +22,10 @@
         <ul>
         <?php
             foreach ($Forums as $forum) {
-                echo '<li>' . $forum->name . '</li>';
+                echo "<li><a href='index.php?c=forum&id=" . $forum->id . "'>" . $forum->name . "</a></li>";
             }
         ?>
+        
         </ul>
     </article>
 </body>

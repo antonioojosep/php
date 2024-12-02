@@ -1,11 +1,13 @@
 <?php
 
 class Forum {
+    private $id;
     private $name;
     private $public;
 
-    public function __construct($name,$public)
+    public function __construct($id, $name,$public)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->public = $public;
     }

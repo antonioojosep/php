@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+</head>
+<body>
+<header>
+    <h1><?php echo $forum->name; ?></h1>
+</header>
+
+<?php
+            foreach ($Matters as $matter) {
+                echo "<li><a href='index.php?c=matter&id=" . $matter->id . "'>" . $matter->name . "</a></li>";
+            }
+        ?>
+</body>
+</html>
