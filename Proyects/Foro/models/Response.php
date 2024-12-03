@@ -2,15 +2,15 @@
 class Response {
     private $id;
     private $text;
-    private $public;
+    private $status;
     private $matter;
     private $user;
 
-    public function __construct($id,$text,$public,$matter,$user)
+    public function __construct($id,$text,$status,$matter,$user)
     {
         $this->id = $id;
         $this->text = $text;
-        $this->public = $public;
+        $this->status = $status;
         $this->matter = $matter;
         $this->user = $user;
     }

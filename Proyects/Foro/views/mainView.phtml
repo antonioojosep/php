@@ -13,6 +13,10 @@
                         <a href="index.php?c=user&signin">Registrarse</a>';
             }else {
                 echo '<a href="index.php?c=user&close">Cerrar Sesión</a>';
+                echo "<form action='index.php?c=forum&add' method='post'>
+                         <input type='text' name='forum' id='forum' placeholder='Nombre del foro:' required>
+                        <input type='submit' value='Añadir' name='add' id='add'>
+                    </form>";
             }
 
             if (isset($_SESSION['user']) && $user->type == 'admin') {
@@ -26,10 +30,11 @@
         <ul>
         <?php
             foreach ($Forums as $forum) {
-                if (isset($_SESSION['user']) || (!isset($_SESSION['user']) && $forum->public) ) {
+                if (isset($_SESSION['user']) || (!isset($_SESSION['user']) && $forum->type == 'public') ) {
                     echo "<li><a href='index.php?c=forum&id=" . $forum->id . "'>" . $forum->name . "</a></li>";
                     if (isset($_SESSION['user']) && $user->type == 'admin') {
-                        echo "<a href='index.php?c=forum&public=$forum->id'></a>";
+                        echo "<a href='index.php?c=forum&type=$forum->id'>$forum->type</a>";
+                        echo "<a href='index.php?c=forum&delete=$forum->id'>Eliminar</a>";
                     }
                     $Matters = ForumRepository::getMatterByForum($forum->id);
                     for ($i=0; $i < 2; $i++) { 

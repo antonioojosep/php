@@ -9,7 +9,13 @@
 
 <header>
     <h1><?php echo $matter->name  ?></h1>
+    <a href="index.php">Home</a>
 </header>
+<form action="index.php?c=response&add" method="post">
+    <input type="hidden" name="user">
+    <input type="hidden" name="matter">
+    <input type="text" name="" id="">
+</form>
 <?php
             foreach ($Responses as $response) {
                 echo "<li><img width='50px' src='./public/img/". UserRepository::getUserByNickName($response->user)->avatar ."'/>  <strong>". $response->user . ": </strong>" . $response->text . "</li>";

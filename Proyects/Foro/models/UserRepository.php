@@ -9,7 +9,7 @@ class UserRepository {
             $Users = array();
 
             while ($row = $result->fetch_assoc()) {
-                $Users[] = new User($row['nickname'],$row['avatar'],$row['email'],$row['type']);
+                $Users[] = new User($row['nickname'],$row['avatar'],$row['email'],$row['type'],$row['status']);
             }
 
             return $Users;
@@ -50,7 +50,7 @@ class UserRepository {
         $result = $db->query($q);
         $data = $result->fetch_assoc();
 
-        return new User($data['nickname'],$data['avatar'],$data['email'],$data['type']);
+        return new User($data['nickname'],$data['avatar'],$data['email'],$data['type'],$data['type']);
     }
 
     public static function typeHandler($nickname) {

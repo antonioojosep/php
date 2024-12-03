@@ -3,14 +3,14 @@ class Matter {
 
     private $id;
     private $name;
-    private $public;
+    private $status;
     private $forum;
 
-    public function __construct($id, $name,$public,$forum)
+    public function __construct($id, $name,$status,$forum)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->public = $public;
+        $this->status = $status;
         $this->forum = $forum;
     }
 

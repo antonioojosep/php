@@ -3,13 +3,13 @@
 class Forum {
     private $id;
     private $name;
-    private $public;
+    private $type;
 
-    public function __construct($id, $name,$public)
+    public function __construct($id, $name,$type)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->public = $public;
+        $this->type = $type;
     }
 
     public function __get($property)

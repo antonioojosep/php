@@ -8,11 +8,27 @@
 <body>
 <header>
     <h1><?php echo $forum->name; ?></h1>
+    <a href="index.php">Home</a>
+    <?php
+        if (isset($_SESSION['user'])) {
+            echo "<form action='index.php?c=matter&add=$forum->id' method='post'>
+                        <input type='text' name='matter' id='matter' placeholder='Nombre del tema:' required>
+                        <input type='submit' value='Añadir' name='add' id='add'>
+                    </form>";
+        }
+    ?>
 </header>
-
+<ul>
 <?php
             foreach ($Matters as $matter) {
                 echo "<li><a href='index.php?c=matter&id=" . $matter->id . "'>" . $matter->name . "</a></li>";
+                if (isset($_SESSION['user']) && (UserRepository::getUserByNickName($_SESSION['user'])->type == 'admin')) {
+                    echo "<form action='index.php?c=matter&status=$matter->id' method='post'>
+                            <input type='hidden' value='$forum->id' name='forum'>
+                            <input type='submit' value='$matter->status' name='status' id='status'>
+                            <input type='submit' value='Delete' name='delete' id='delete'>
+                        </form>";
+                }
                 $Responses = MatterRepository::getAllResponseByMatter($matter->id);
                     for ($i=0; $i < 2; $i++) { 
                         if ($i<count($Responses)) {
@@ -23,5 +39,6 @@
                     }
             }
         ?>
+</ul>
 </body>
 </html>
