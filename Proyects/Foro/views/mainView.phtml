@@ -37,8 +37,9 @@
                         echo "<a href='index.php?c=forum&delete=$forum->id'>Eliminar</a>";
                     }
                     $Matters = ForumRepository::getMatterByForum($forum->id);
-                    for ($i=0; $i < 2; $i++) { 
-                        if ($i<count($Matters)) {
+                    shuffle($Matters);
+                    for ($i=0; $i < 3; $i++) { 
+                        if ($i<count($Matters) && $Matters[$i]->status == 'active') {
                             echo "<ul type='1'>
                             <li> " . $Matters[$i]->name . "</li>  
                             </ul>";

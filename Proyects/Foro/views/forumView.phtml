@@ -21,22 +21,26 @@
 <ul>
 <?php
             foreach ($Matters as $matter) {
-                echo "<li><a href='index.php?c=matter&id=" . $matter->id . "'>" . $matter->name . "</a></li>";
                 if (isset($_SESSION['user']) && (UserRepository::getUserByNickName($_SESSION['user'])->type == 'admin')) {
+                    echo "<li><a href='index.php?c=matter&id=" . $matter->id . "'>" . $matter->name . "</a></li>";
                     echo "<form action='index.php?c=matter&status=$matter->id' method='post'>
                             <input type='hidden' value='$forum->id' name='forum'>
                             <input type='submit' value='$matter->status' name='status' id='status'>
                             <input type='submit' value='Delete' name='delete' id='delete'>
                         </form>";
-                }
-                $Responses = MatterRepository::getAllResponseByMatter($matter->id);
+                }else if ($matter->status == 'active') {
+                    echo "<li><a href='index.php?c=matter&id=" . $matter->id . "'>" . $matter->name . "</a></li>";
+                    $Responses = MatterRepository::getAllResponseByMatter($matter->id);
+                    shuffle($Responses);
                     for ($i=0; $i < 2; $i++) { 
-                        if ($i<count($Responses)) {
+                        if ($i<count($Responses) && $Responses[$i]->status == 'active') {
                             echo "<ul type='1'>
                             <li> " . $Responses[$i]->text . "</li>  
                             </ul>";
                         }
                     }
+                }
+                
             }
         ?>
 </ul>
