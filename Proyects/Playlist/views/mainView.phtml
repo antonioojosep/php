@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+</head>
+<body>
+    <?php
+        if (!isset($_SESSION['user'])) {
+            echo "<a href='index.php?c=user&login'>Iniciar Sesión</a>
+                    <a href='index.php?c=user&signin'>Registrarse</a>";
+        }else {
+            echo "<header><h1>".$_SESSION['user']->username ."</h1>
+            <a href='index.php?c=user&close'>Cerrar Session</a>
+            </header>";
+            echo "<form action='index.php?c=playlist' method='post'>
+                <input type='text' placeholder='Titulo: ' name='title' id='title'>
+                <input type='submit' value='Añadir' name='add'>
+            </form>
+            <form action='index.php?c=playlist' method='post'>
+                <input type='text' placeholder='Nombre de la playlist:' name='title' id='title'>
+                <input type='submit' value='Buscar' name='search'>
+            </form>
+            <a href='index.php?c=song'>Canciones</a>
+            <ul>";
+            foreach ($Playlists as $playlist) {
+                $songs = SongPlaylistRepository::getAllSongByPlaylist($playlist->id);
+                $segundos = 0;
+                foreach ($songs as $song) {
+                    $segundos += $song->length;
+                }
+                echo "<li><a href='index.php?c=playlist&id=$playlist->id'><strong>$playlist->title</strong></a>".
+                count($songs). "-". $segundos . "<a href='index.php?c=playlist&fav=$playlist->id'>Añadir a favoritos</a></li>";
+            }
+            echo "</ul>";
+            echo "<h2>Favoritos:</h2>";
+            foreach ($Favs as $fav) {
+                echo "<li><a href='index.php?c=playlist&id=$fav->id'><strong>$fav->title</strong></a>".
+                count($songs). "-". $segundos ."</li>";
+            }
+
+        }
+    ?>
+    
+</body>
+</html>

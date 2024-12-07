@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1><?= $playlist->title ?></h1>
+        <a href="index.php">Home</a>
+    </header>
+    <ul>
+    <?php
+        foreach ($Songs as $song) {
+            echo "<li><strong>$song->title: </strong>$song->author - " . $song->getLength()."</li>";
+            echo "<audio src='./public/mp3/$song->fyle' controls>
+                    Your browser does not support the <code>audio</code> element.
+                </audio>";
+        }
+    ?>
+    
+    </ul>
+</body>
+</html>
