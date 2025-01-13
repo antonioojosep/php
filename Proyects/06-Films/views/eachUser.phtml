@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php $_SESSION['user']->getUsername(); ?></title>
+</head>
+<body>
+    <?php
+
+        $username = $_SESSION['user']->getUsername();
+        echo "<h1>".$username."</h1>";
+
+        $allComments = CommentRepository::getCommentsByUser($username);
+        foreach($allComments as $comment){
+            echo "<h5>". Movie::getNameById($comment->getMovieId()) .": </h5>";
+            echo "<p><strong>". $comment->getUser(). " : </strong>". $comment->getComment(). "</p>";
+        }
+
+        echo "<h2>Favoritos</h1>";
+
+        $favoritos = FavoritesRepository::getAllFavoritesByUser($username);
+        foreach($favoritos as $favorito){
+            echo "<p>". Movie::getNameById($favorito->getMovieId()). "</p>";
+        }
+
+    ?>
+</body>
+</html>

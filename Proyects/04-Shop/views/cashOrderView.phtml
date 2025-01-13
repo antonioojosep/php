@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Order</title>
+</head>
+
+<body>
+    <?php
+    $cahsOrderPrice = 0;
+    foreach ($lines as $line) {
+        $name = $line->getName();
+        $amount = $line->getAmount();
+        $price = $line->getPrice();
+        $totalPrice = $price * $amount;
+        $cahsOrderPrice += $totalPrice;
+        echo "<div>
+                <h4>$name</h4>
+                <p><strong>Cantidad: </strong>$amount</p>
+                <p><strong>Precio por ud: </strong>$price</p>
+                <p><strong>Precio: </strong>$totalPrice</p>
+            </div>";
+    }
+    echo "<h2><strong>Precio Total: </strong>$$cahsOrderPrice</h2>";
+    echo "
+        <form action='index.php?c=cashOrder&final=$id_cashorder' method='post'>
+        <input type='text' name='address' id='address' placeholder='Dirección' required >
+        <select name='method' id='method'>
+            <option value='card'>Tarjeta</option>
+            <option value='transfer'>Transferencia</option>
+        </select>
+        <input type='submit' name='final' value='Comprar'>
+        </form>
+    ";
+    ?>
+</body>
+
+</html>

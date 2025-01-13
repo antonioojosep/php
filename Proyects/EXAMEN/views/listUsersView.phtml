@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin View</title>
+</head>
+<body>
+<a href="index.php">Home</a>
+    <ul>
+    <?php 
+        foreach ($Users as $user) {
+            if ($user->getRole() != 'admin') {
+                $id = $user->getId();
+                $name = $user->getUsername();
+                $role = $user->getRole();
+                echo "<li><strong>Nombre:</strong> <a href=index.php?c=user&username=$name>$name</a> - $role</li>";
+            }
+        }
+    ?>
+    </ul>
+</body>
+</html>

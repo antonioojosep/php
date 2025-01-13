@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>historico de pedidos</h2>
+
+    <?php
+
+    foreach ($_SESSION['user']->getOrders() as $order) {
+
+        echo "<h3>Pedido #" . $order->getId() . "</h3>";
+        echo "<p>Fecha: " . $order->getOrderDate() . "</p>";
+        echo "<p>Total: $" . $order->getTotal() . "</p>";
+        echo "<p>Productos:</p>";
+        foreach ($order->getOrderLines() as $line) {
+
+            echo "<p>" . $line->getProduct()->getName() . ": " . $line->getQuantity() . "</p>";
+        }
+    }
+
+    ?>
+</body>
+
+</html>

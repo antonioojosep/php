@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+</head>
+<body>
+    <header>
+        <?php
+            if (!isset($_SESSION['user'])) {
+                echo '<a href="index.php?c=user&login">Iniciar Sesión</a>
+                        <a href="index.php?c=user&signin">Registrarse</a>';
+            }else {
+                echo '<a href="index.php?c=user&close">Cerrar Sesión</a>';
+                echo "<form action='index.php?c=forum&add' method='post'>
+                         <input type='text' name='forum' id='forum' placeholder='Nombre del foro:' required>
+                        <input type='submit' value='Añadir' name='add' id='add'>
+                    </form>";
+            }
+
+            if (isset($_SESSION['user']) && $user->type == 'admin') {
+                echo '<a href="index.php?c=user&list">Listar Usuarios</a>';
+            }
+        ?>
+        
+    </header>
+
+    <article>
+        <ul>
+        <?php
+            foreach ($Forums as $forum) {
+                if (isset($_SESSION['user']) || (!isset($_SESSION['user']) && $forum->type == 'public') ) {
+                    echo "<li><a href='index.php?c=forum&id=" . $forum->id . "'>" . $forum->name . "</a></li>";
+                    if (isset($_SESSION['user']) && $user->type == 'admin') {
+                        echo "<a href='index.php?c=forum&type=$forum->id'>$forum->type</a>";
+                        echo "<a href='index.php?c=forum&delete=$forum->id'>Eliminar</a>";
+                    }
+                    $Matters = ForumRepository::getMatterByForum($forum->id);
+                    shuffle($Matters);
+                    for ($i=0; $i < 3; $i++) { 
+                        if ($i<count($Matters) && $Matters[$i]->status == 'active') {
+                            echo "<ul type='1'>
+                            <li> " . $Matters[$i]->name . "</li>  
+                            </ul>";
+                        }
+                    }
+                    
+                }
+            }
+                
+        ?>
+        
+        </ul>
+    </article>
+</body>
+</html>

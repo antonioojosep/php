@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matter</title>
+</head>
+<body>
+
+<header>
+    <h1><?php echo $matter->name  ?></h1>
+    <a href="index.php">Home</a>
+</header>
+<form action="index.php?c=response&add" method="post">
+    <input type="hidden" value=<?php if (isset($_SESSION['user'])) { echo  $_SESSION['user'];}  ?> name="user" id="user">
+    <input type="hidden" value="<?php echo  $matter->id ?>" name="matter" id="matter">
+    <input type="text" placeholder="Respuesta: " name="response" id="response">
+    <input type="submit" value="Añadir">
+</form>
+<?php
+        foreach ($Responses as $response) {
+            if (isset($_SESSION['user']) && UserRepository::getUserByNickName($_SESSION['user'])->type == 'admin') {
+                echo "<li><img width='50px' src='./public/img/". UserRepository::getUserByNickName($response->user)->avatar ."'/>  <strong>". $response->user . ": </strong>" . $response->text . "</li>";
+                echo "<form action='index.php?c=response&id=$response->id' method='post'>
+                            <input type='hidden' value='$matter->id' name='matter'>
+                            <input type='submit' value='$response->status' name='status' id='status'>
+                            <input type='submit' value='Delete' name='delete' id='delete'>
+                        </form>";
+            }else if ($response->status =='active') {
+                echo "<li><img width='50px' src='./public/img/". UserRepository::getUserByNickName($response->user)->avatar ."'/>  <strong>". $response->user . ": </strong>" . $response->text . "</li>";
+                
+            }
+        }
+        ?>
+        
+</body>
+</html>

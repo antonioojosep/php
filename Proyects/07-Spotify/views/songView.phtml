@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <?php
+
+    $min = round($song->getDuration() / 60, 0);
+    $sec = $song->getDuration() % 60;
+
+    echo "<h2>" . $song->getTitle() . "</h2><br>";
+    echo $song->getAuthor() . "</br><br>";
+    echo "duracion: " . $min . ":" . $sec;
+    echo '<audio src="public/mp3/' . $song->getMp3() . '" controls>
+  Your browser does not support the <code>audio</code> element.
+</audio>';
+    ?>
+
+    <form method="post" action="index.php?c=song">
+        <input list="playlists" name="playlist">
+        <input type="hidden" name="song" <?php echo "value='" . $song->getId() . "'"; ?>>
+        <input type="submit" name="addToPlaylist">Agregar a playlist</input>
+    </form>
+    <datalist id="playlists">
+        <?php
+        foreach ($_SESSION['user']->getPlayLists() as $playlist) {
+            echo '<option value="' . $playlist->getName() . '"></option>';
+        }
+        ?>
+    </datalist>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+</head>
+<body>
+    <a href="index.php?c=user&close">Cerrar Sesion</a>
+    <ul>
+    <?php 
+        if ($_SESSION['user']->getRole() == 'admin') {
+            echo '<li><a href="index.php?c=user&listAllUsers">Gestion de Usuarios</a></li>';
+            echo '<li><a href="index.php?c=user&listCompany">Gestion de Empresas</a></li>';
+        }elseif ($_SESSION['user']->getRole() == 'teacher') {
+            echo '<li><a href="index.php?c=user&listUsers">  Vista de Alumnos  </a></li>';
+            echo '<li><a href="index.php?c=user&listTeachers">  Vista de Profesores  </a></li>';
+            echo '<li><a href="index.php?c=user&listCompany">  Vista de Empresas  </a></li>';
+            echo '<li><a href="index.php?c=company&create">  Crear Empresa  </a></li>';
+            echo '<li><a href="index.php?c=practice&list">  Ver Practicas  </a></li>';
+        }
+        $Practices = $_SESSION['user']->getPractice();
+        echo "<h2>Practicas</h2>";
+        foreach ($Practices as $practice) {
+            $user = $practice->getUser();
+            $user_id = $user->getId();
+            $name = $user->getUsername();
+            $practice_id = $practice->getId();
+
+            echo "<li> <a href='index.php?c=practice&edit=$user_id'>Modificar Practicas de $name</a>";
+            echo "</br><a href='index.php?c=practice&delete=$practice_id'>Eliminar Practicas de $name</a></li>";
+        }
+    ?>
+    </ul>
+</body>
+</html>

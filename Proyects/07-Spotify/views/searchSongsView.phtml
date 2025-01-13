@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>canciones encontradas:</h2>
+
+    <?php
+    foreach ($songs as $song) {
+        echo "<h3><a href='index.php?c=song&detail={$song->getId()}'>{$song->getTitle()}</a></h3>";
+        echo "<p>{$song->getAuthor()}</p>";
+        echo "<p>{$song->getDuration()} minutos</p>";
+        echo "<hr>";
+        echo "<br>";
+    }
+    ?>
+</body>
+
+</html>

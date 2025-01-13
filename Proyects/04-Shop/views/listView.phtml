@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+</head>
+
+<body>
+    <?php
+    if (isset($_SESSION['user'])) {
+        echo "<a href='index.php?c=user&&close'>Cerrar</a>";
+        echo "<h1>" . $_SESSION['user']->getUsername() . "</h1>";
+
+        if ($admin) {
+            echo "<a href='index.php?c=product'>Añadir producto</a></br>";
+            echo "<a href='index.php?c=listUser'>Gestionar usuario</a></br>";
+            echo "<a href='index.php?c=listCashOrders'>Gestionar pedidos</a></br>";
+        } else {
+            echo "<a href='index.php?c=cashOrder'>Carrito</a>";
+        }
+    }
+
+            $id = $bestProduct[0]->getId();
+            $name = $bestProduct[0]->getName();
+            $img = $bestProduct[0]->getImage();
+            $description = $bestProduct[0]->getDescription();
+            $stock = $bestProduct[0]->getStock();
+            $price = $bestProduct[0]->getPrice();
+            $username = $bestUser[0]->getUsername();
+
+            echo "<div>";
+            echo "<p>-----------BEST PRODUCT-------------------</p>";
+            echo "<img src='./public/img/$img' alt='Imagen de producto' width='100px'>";
+            echo "<h3>$name</h3>";
+            echo "<p><strong>$stock und</strong>  $price €</p>";
+            echo "<p>$description</p>";
+            echo "<p><strong>Total Sold: </strong>$bestProduct[1]</p>";
+            echo "<p>-----------BEST USER-------------------</p>";
+            echo "<p><strong>User: </strong>$username</p>";
+            echo "<p><strong>Total Spend: </strong>$bestUser[1]</p>";
+            echo "<p>-----------------------------------------</p>";
+            echo "</div>";
+
+    foreach ($products as $product) {
+        // Declaración de variables
+        $id = $product->getId();
+        $name = $product->getName();
+        $img = $product->getImage();
+        $description = $product->getDescription();
+        $stock = $product->getStock();
+        $price = $product->getPrice();
+
+        // Mostrar
+        if ($stock > 0) {
+            echo "<div>";
+            echo "<img src='./public/img/$img' alt='Imagen de producto' width='100px'>";
+            echo "<h3>$name</h3>";
+            echo "<p><strong>$stock und</strong>  $price €</p>";
+            echo "<p>$description</p>";
+            if (isset($_SESSION['user']) && !$admin) {
+                    $amount = 0;
+                    $productLines = ProductLineRepository::gelAllsCompletedProductLines($_SESSION['user']->getUsername());
+                    if ($productLines) {
+                        foreach ($productLines as $productLine) {
+                            if ($productLine->getIdProduct() === $id) {
+                                $amount += $productLine->getAmount();
+                            }
+                        }
+                    }
+                    echo $amount . " Comprados";
+                echo
+                "<form action='index.php?c=cashOrder' method='post'>
+                    <input type='hidden' name='id_product' value='$id'/>
+                    <input type='hidden' name='name' value='$name'/>
+                    <input type='hidden' name='price' value='$price'/>
+                    <input id='amount$id' name='amount' type='range' min='1' max='$stock' value='1' step='1' />
+                    <p>Value: <output id='value$id'></output></p>
+                    <input type='submit' name='buy' value='Comprar'/>
+                </form>
+                <script>
+                    const value$id = document.getElementById('value$id');
+                    const input$id = document.getElementById('amount$id');
+                    value$id.textContent = input$id.value;
+                    input$id.addEventListener('input', (event) => {
+                    value$id.textContent = event.target.value;
+                    });
+                </script>";
+            }
+        }
+        echo "</div>";
+    }
+
+    if (isset($_SESSION['user']) && $admin) {
+        echo "<p>------PRODUCTOS SIN STOCK---------</p>";
+        foreach ($products as $product) {
+            // Declaración de variables
+            $id = $product->getId();
+            $name = $product->getName();
+            $img = $product->getImage();
+            $description = $product->getDescription();
+            $stock = $product->getStock();
+            $price = $product->getPrice();
+            if ($stock==0) {
+                echo "<div>";
+                echo "<img src='./public/img/$img' alt='Imagen de producto' width='100px'>";
+                echo "<h3>$name</h3>";
+                echo "<p><strong>$stock und</strong>  $price €</p>";
+                echo "<p>$description</p>";
+                echo
+                "<form action='index.php?c=product&&addStock' method='post'>
+                    <input type='hidden' name='id_product' value='$id'/>
+                    <input type='hidden' name='name' value='$name'/>
+                    <input type='hidden' name='price' value='$price'/>
+                    <input id='amount$id' name='amount' type='range' min='1' max='100' value='1' step='1' />
+                    <p>Value: <output id='value$id'></output></p>
+                    <input type='submit' name='buy' value='Añadir'/>
+                </form>
+                <script>
+                    const value$id = document.getElementById('value$id');
+                    const input$id = document.getElementById('amount$id');
+                    value$id.textContent = input$id.value;
+                    input$id.addEventListener('input', (event) => {
+                    value$id.textContent = event.target.value;
+                    });
+                </script>";
+            }
+        }
+    }
+
+
+    ?>
+
+</body>
+
+</html>

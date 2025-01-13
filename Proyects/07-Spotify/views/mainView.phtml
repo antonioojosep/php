@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>hola</h1>
+    <a href="index.php?c=user&logout=1">Logout</a>
+    <?php
+    if (isset($_SESSION['user'])) {
+        echo "Welcome, " . $_SESSION['user']->getUsername();
+
+        if ($_SESSION['user']->getRol()) {
+            echo "aqui va los botones de crear cancion y playlist";
+        }
+    }
+    ?>
+    Subir canción:<br>
+    <form action="index.php?c=song&addSong=1" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="nombre de la cación">
+        <input type="file" name="mp3" accept="audio/*">
+        <input type="text" name="author" placeholder="autor">
+        <input type="number" name="duration" placeholder="duracion">
+        <input type="submit" value="Agregar Cancion">
+
+    </form>
+
+    Crear Lista de reproducción:<br>
+    <form action="index.php?c=playlist&addPlaylist=1" method="post">
+        <input type="text" name="name" placeholder="nombre de la playlist">
+        <input type="submit" value="Crear Playlist">
+    </form>
+
+    Buscar canciones:<br>
+    <form action="index.php?c=song&searchSong=1" method="post">
+        <input type="text" name="search" placeholder="buscar canción">
+        <input type="submit" value="Buscar">
+    </form>
+
+    <?php
+    echo "<h2>Mis Listas de Reproducción</h2>";
+
+    foreach ($_SESSION['user']->getPlaylists() as $pl) {
+        echo "<p><a href='index.php?c=playlist&detail=" . $pl->getId() . "'>" . $pl->getName();
+        echo "</a></p>";
+    }
+
+    if (isset($_SESSION['info'])) {
+        echo "<script>alert('" . $_SESSION['info'] . "')</script>";
+        unset($_SESSION['info']);
+    }
+    ?>
+</body>
+
+</html>

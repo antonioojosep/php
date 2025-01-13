@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <?php 
+        $companys = CompanyRepository::getAllCompany();
+        if ($user->getRole() == 'user') {
+            echo "<form action='index.php?c=practice&edit=" . $user->getId() . "' method='post'>
+                    <label for='company'>Asignar :</label>
+                        <input list='companys' name='company' />
+                        <datalist id='companys'>";
+
+            foreach ($companys as $company) {
+                $name = $company->getName();
+                $nif = $company->getNif();
+                echo "<option value='$nif' label='$name'></option>";
+            }
+            echo "</datalist>
+            <input list='teachers' name='teacher' />
+            <datalist id='teachers'>";
+            $teachers = UserRepository::getUserByRole('teacher');
+
+            foreach ($teachers as $teacher) {
+                $username = $teacher->getUsername();
+                $id = $teacher->getId();
+                echo "<option value='$id' label='$username'></option>";
+            }
+            echo "</datalist>
+            <input type='date' name='start'>
+            <input type='date' name='end'>
+            <input type='submit' value='Asignar' name='asign'>
+                    </form>";
+            }
+    ?>
+</body>
+</html>

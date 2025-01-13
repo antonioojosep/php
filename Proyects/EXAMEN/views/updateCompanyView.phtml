@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Company</title>
+</head>
+<body>
+    <form action="index.php?c=user&update" method="post">
+        <input type="text" value="<?= $company->getName()?>" name="name" id="name" placeholder="Nombre:" required>
+        <input type="text" value="<?= $company->getNif()?>" name="nif" id="nif" placeholder="NIF:" required>
+        <input type="text" value="<?= $company->getAddress()?>" name="address" id="address" placeholder="Direccion:" required>
+        <input type="text" value="<?= $company->getTutor()?>" name="tutor" id="tutor" placeholder="Tutor" required>
+        <input type="text" value="<?= $company->getTelephone()?>" name="telephone" id="telephone" placeholder="Teléfono:" required>
+        <input type="email" value="<?= $company->getEmail()?>" name="email" id="email" placeholder="Email:" required>
+        <input type="submit" value="Editar" name="edit">
+    </form>
+</body>
+</html>

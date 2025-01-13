@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+</head>
+
+<body>
+    <h1><?= $user->getUsername() ?></h1>
+    <a href="index.php">Home</a>
+    <?php
+    if ($_SESSION['user']->getRole() == 'admin') {
+        echo "<form action='index.php?c=user&change=" . $user->getUsername() . "' method='post'>
+                    <label for='role'>Cambiar rol a :</label>
+                        <input list='roles' name='role' />
+                        <datalist id='roles'>
+                            <option value='User'></option>
+                            <option value='Teacher'></option>
+                        </datalist>
+                        <input type='submit' value='Cambiar' name='change'>
+                    </form>";
+    } elseif ($_SESSION['user']->getRole() == 'teacher') {
+        $id = $user->getId();
+        echo "<a href='index.php?c=practice&edit=$id'>Añadir Practicas</a>" ;  
+        echo "<h3>Practicas</h3>";
+
+        }
+    
+    ?>
+
+
+    <p><?= $user->getRole() ?></p>
+
+</body>
+
+</html>

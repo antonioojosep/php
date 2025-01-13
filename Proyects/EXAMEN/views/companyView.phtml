@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos de la Empresa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Datos de la Empresa</h1>
+    <a href="index.php">Home</a>
+    <table>
+        <tr>
+            <th>NIF</th>
+            <td><?= $company->getNif() ?></td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td><?= $company->getName(); ?></td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
+            <td><?= $company->getAddress(); ?></td>
+        </tr>
+        <tr>
+            <th>Tutor</th>
+            <td><?= $company->getTutor(); ?></td>
+        </tr>
+        <tr>
+            <th>Teléfono</th>
+            <td><?=$company->getTelephone(); ?></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><?= $company->getEmail(); ?></td>
+        </tr>
+    </table>
+    <a href="index.php?c=company&edit=<?= $company->getNif(); ?>">Editar</a>
+</body>
+</html>

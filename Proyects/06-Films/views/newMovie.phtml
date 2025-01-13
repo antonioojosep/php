@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva película</title>
+    <link rel="stylesheet" href="./public/css/newMovie.css">
+</head>
+
+<body>
+    <h1>Añadir nueva película</h1>
+
+    <form action="index.php" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Título de la película:</label>
+            <input type="text" id="title" name="title" placeholder="Título" required>
+        </div>
+
+        <div class="form-group">
+            <label for="year">Año de lanzamiento:</label>
+            <input type="number" id="year" name="year" placeholder="Año" min="1900" max="2099" required>
+        </div>
+
+        <div class="form-group">
+            <label for="poster">Póster de la película:</label>
+            <input type="file" id="poster" name="poster" accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+            <label for="genero">Género:</label>
+            <select id="genero" name="genero" required>
+                <option value="Horror">Horror</option>
+                <option value="Comedia">Comedia</option>
+                <option value="Drama">Drama</option>
+                <option value="Accion">Acción</option>
+                <option value="Ciencia Ficcion">Ciencia Ficción</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="addMovie" value="Agregar película">
+        </div>
+    </form>
+
+</body>
+
+</html>
