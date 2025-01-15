@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Asegúrate de tener un archivo CSS enlazado -->
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/register">Registrarse</a></li>
+                {% if app.user %}
+                    <li><a href="/logout">Cerrar Sesión</a></li>
+                {% else %}
+                    <li><a href="/login">Iniciar Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Bienvenido a Nuestra Página</h1>
+        {% if app.user %}
+            <p>Hola, {{ app.user.username }}! Nos alegra verte de nuevo.</p>
+        {% else %}
+            <p>Por favor, inicia sesión para jugar a las cartas</p>
+        {% endif %}
+    </main>
+
+</body>
+</html>
