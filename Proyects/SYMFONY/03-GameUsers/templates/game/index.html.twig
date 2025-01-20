@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Game index{% endblock %}
+
+{% block body %}
+    <h1>Game index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for game in games %}
+            <tr>
+                <td>{{ game.id }}</td>
+                <td>{{ game.status ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_card_index', {'id': game.id}) }}">Play</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <h2>Win Games</h2>
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for winGame in winGames %}
+            <tr>
+                <td>{{ winGame.id }}</td>
+                <td>{{ winGame.status ? 'Yes' : 'No' }}</td>
+                <td>{{ winGame.winner.username}}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_card_index') }}">Create new</a>
+{% endblock %}

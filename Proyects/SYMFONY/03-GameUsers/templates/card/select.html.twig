@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Play Game{% endblock %}
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #8ecae6;
+        }
+        .card-container {
+            display: flex;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .card-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .card-description {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .card img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<h1>Elije una opción</h1>
+    <div class="card-container">
+        <div class="card">
+            <div class="card-title">
+                {% if app.request.query.get('id') %}
+                    <a href="{{ path('app_game_edit', {'id': app.request.query.get('id'), 'cardId': card1.id, 'playerId': app.user.id}) }}">Carta 1</a>
+                {% else %}
+                    <a href="{{ path('app_game_new', {'cardId': card1.id, 'playerId': app.user.id}) }}">Carta 1</a>
+                {% endif %}
+            </div>
+            <div class="card-description">{{ card1.number }}: {{ card1.palo}}</div>
+        </div>
+        <div class="card">
+            <div class="card-title">
+                {% if app.request.query.get('id') %}
+                    <a href="{{ path('app_game_edit', {'id': app.request.query.get('id'), 'cardId': card2.id, 'playerId': app.user.id}) }}">Carta 2</a>
+                {% else %}
+                    <a href="{{ path('app_game_new', {'cardId': card2.id, 'playerId': app.user.id}) }}">Carta 2</a>
+                {% endif %}
+            </div>
+            <div class="card-description">{{ card2.number }}: {{ card2.palo}}</div>
+        </div>
+    </div>
+{% endblock %}

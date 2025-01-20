@@ -17,7 +17,7 @@ final class CardController extends AbstractController
     #[Route( '/' ,name: 'app_card_index', methods: ['GET'])]
     public function index(CardRepository $cardRepository): Response
     {
-        return $this->render('card/game.html.twig', [
+        return $this->render('card/select.html.twig', [
             'card1' => $cardRepository->findRandomCard(),
             'card2' => $cardRepository->findRandomCard(),
         ]);
