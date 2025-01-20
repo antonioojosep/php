@@ -28,7 +28,7 @@ final class GameController extends AbstractController
     }
 
     #[Route('/new/{cardId}/{playerId}', name: 'app_game_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, CardRepository $cardRepository, UserRepository $userRepository, int $cardId, int $playerId): Response
+    public function new(EntityManagerInterface $entityManager, CardRepository $cardRepository, UserRepository $userRepository, int $cardId, int $playerId): Response
     {
         $card = $cardRepository->find($cardId);
         $player = $userRepository->find($playerId);
@@ -42,7 +42,7 @@ final class GameController extends AbstractController
         $game->setStatus(false);
         $entityManager->persist($game);
         $entityManager->flush();
-        return $this->redirectToRoute('app_game_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_game_index');
     }
 
     #[Route('/{id}', name: 'app_game_show', methods: ['GET'])]
@@ -54,7 +54,7 @@ final class GameController extends AbstractController
     }
 
     #[Route('/edit/{id}/{cardId}/{playerId}', name: 'app_game_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $entityManager, GameRepository $gameRepository, CardRepository $cardRepository, UserRepository $userRepository, int $id, int $cardId, int $playerId): Response
+    public function edit(EntityManagerInterface $entityManager, GameRepository $gameRepository, CardRepository $cardRepository, UserRepository $userRepository, int $id, int $cardId, int $playerId): Response
     {
         $game = $gameRepository->find($id);
         $card = $cardRepository->find($cardId);
@@ -66,23 +66,60 @@ final class GameController extends AbstractController
         $game->setCard2($card); // Actualiza la carta seleccionada en el juego
         $game->setPlayer2($player); // Actualiza el jugador seleccionado en el juego
         $game->setStatus(true);
+        $entityManager->persist($game);
+        $entityManager->flush();
+        $status = '';
 
-        if ($game->getCard1()->getNumber() > $game->getCard2()->getNumber()) {
-            $entityManager->persist($game);
-            $entityManager->flush();
-            $game->setWinner($game->getPlayer1());
-            return $this->render('game/status.html.twig', [
-                'status' => 'Perdido',
-            ]);
-
+        if ($game->getCard1()->getPalo() == $game->getCard2()->getPalo() ) {
+            if ($game->getCard1()->getNumber() > $game->getCard2()->getNumber()) {
+                $game->setWinner($game->getPlayer1());
+                $status = 'Perdido';
+    
+            }else {
+                $game->setWinner($game->getPlayer2());
+                $status = 'Ganado';
+            }
         }else {
-            $entityManager->persist($game);
-            $entityManager->flush();
-            $game->setWinner($game->getPlayer2());
-            return $this->render('game/status.html.twig', [
-                'status' => 'Ganado'
-            ]);
+            switch ($game->getCard2()->getPalo()) {
+                case 'Oros':
+                    $game->setWinner($game->getPlayer2());
+                    $status = 'Ganado';
+                
+                case 'Copas':
+                    if ($game->getCard1()->getPalo() == 'Oros') {
+                        $game->setWinner($game->getPlayer1());
+                        $status = 'Perdido';
+                    }else {
+                        $game->setWinner($game->getPlayer2());
+                        $status = 'Ganado';
+                    }
+                    
+                case 'Espadas':
+                    if ($game->getCard1()->getPalo() == 'Oros' || $game->getCard1()->getPalo() == 'Copas') {
+                        $game->setWinner($game->getPlayer1());
+                        $status = 'Perdido';
+                    }else {
+                        $game->setWinner($game->getPlayer2());
+                        $status = 'Ganado';
+                    }
+                
+                case 'Bastos':
+                    if ($game->getCard1()->getPalo() == 'Oros' || $game->getCard1()->getPalo() == 'Copas' || $game->getCard1()->getPalo() == 'Espadas') {
+                        $game->setWinner($game->getPlayer1());
+                        $status = 'Perdido';
+                    }else {
+                        $game->setWinner($game->getPlayer2());
+                        $status = 'Ganado';
+                    }
+                
+            }
         }
+
+        $entityManager->persist($game);
+        $entityManager->flush();
+        return $this->render('game/status.html.twig', [
+            'status' => $status
+        ]);
     }
 
     #[Route('/{id}', name: 'app_game_delete', methods: ['POST'])]
