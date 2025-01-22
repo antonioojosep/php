@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Change{% endblock %}
+
+{% block body %}
+    <h1>Create new Change</h1>
+
+    {{ include('change/_form.html.twig') }}
+
+    <a href="{{ path('app_change_index') }}">back to list</a>
+{% endblock %}

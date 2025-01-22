@@ -54,5 +54,9 @@
         </tbody>
     </table>
 
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('app_user_index')}}">Ver usuarios</a>
+    {% endif %}
+
     <a href="{{ path('app_card_index') }}">Create new</a>
 {% endblock %}

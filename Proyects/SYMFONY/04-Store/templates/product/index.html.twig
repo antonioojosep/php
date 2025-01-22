@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+    <h1>Product index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>New Amount</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.amount }}</td>
+                <td>{{ product.getNewAmount() }}</td>
+                <td>{{ product.location.id }}</td>
+                {% if is_granted("ROLE_BOSS") %}
+                <td>
+                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted("ROLE_BOSS") %}
+        <a href="{{ path('app_product_new') }}">Create new</a>
+    {% endif %}
+    <a href="{{ path('app_change_new') }}">Add change</a>
+{% endblock %}
